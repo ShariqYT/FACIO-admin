@@ -25,20 +25,20 @@ const AdminPage = ({user}) => {
   const handleSignout = () => {
     signOut(auth).then(val => {
       // console.log(val, "val")
-      history('/FACIO/sign-in')
+      history('/FACIO-admin/sign-in')
     })
   }
 
   const handleStart = () => {
-    history('/FACIO/admin/start')
+    history('/FACIO-admin/admin/start')
   }
 
   const handleManage = () => {
-    history('/FACIO/admin/manage-users')
+    history('/FACIO-admin/admin/manage-users')
   }
 
   const handleAttendance = () => {
-    history('/FACIO/admin/attendance')
+    history('/FACIO-admin/admin/attendance')
   }
 
   document.title = "Admin - FACIO";

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './login.css';
 import logo from '../../assets/Logo.png'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { auth, googleProvider } from '../../config/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signInWithPopup } from 'firebase/auth';
+import { auth } from '../../config/firebase';
+import { signInWithEmailAndPassword  } from 'firebase/auth';
 import { RingLoader } from 'react-spinners';
 
 function Login({ user }) {
@@ -25,30 +25,6 @@ function Login({ user }) {
         setIsSignIn(!isSignIn);
     };
 
-
-    const handleSignUp = (e) => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        const cpassword = e.target.cpassword.value;
-
-        if (cpassword === password) {
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    alert("Your account has been created!");
-                })
-                .catch((error) => {
-                    // console.error("Error creating user:", error);
-                    alert(error.code);
-                });
-        } else {
-            alert("Password doesn't match with Confirm Password");
-        }
-    };
-
-
-
-
     const handleSignIn = (e) => {
         e.preventDefault();
 
@@ -59,26 +35,14 @@ function Login({ user }) {
             .then(data => {
                 // console.log(data, "authData");
 
-                if (lemail === 'smartattend@admin.com') {
-                    history('/FACIO/admin');
-                } else {
-                    history('/FACIO/staff-student');
-                }
+                history('/FACIO-admin/admin')
             })
             .catch(error => {
                 alert(error.code);
             });
     };
 
-    const handleGoogleSignIn = () => {
-        signInWithPopup(auth, googleProvider).then((res) => {
-            history('/FACIO/staff-student')
-        }).catch((err) => {
-            alert(err)
-        })
-    }
-
-    document.title = "Sign In / Sign Up - FACIO";
+    document.title = "Sign In - FACIO Admin";
 
     return (
         <>
@@ -124,6 +88,7 @@ function Login({ user }) {
 
                                 <form onSubmit={(e) => handleSignIn(e)}>
                                     <div className="form sign-in">
+                                        <h1>Admin</h1>
                                         <div className="input-group">
                                             <i className='bx bxs-user'></i>
                                             <input required id="lemail" name='lemail' type="email" placeholder="Email" />
@@ -132,15 +97,7 @@ function Login({ user }) {
                                             <i className='bx bxs-lock-alt'></i>
                                             <input required id="lpass" name='lpass' type="password" placeholder="Password" />
                                         </div>
-                                        <button type="button" onClick={handleGoogleSignIn} className="login-with-google-btn" >
-                                            Sign in with Google
-                                        </button>
                                         <input className="btn" type="submit" value="Login" />
-                                        <Link to="/FACIO/reset" id='reset_pass' >Reset password</Link>
-                                        <p>
-                                            <span>Don't have an account?</span>
-                                            <b onClick={toggle} className="pointer text-dec-line">Sign up here</b>
-                                        </p>
                                     </div>
                                 </form>
 
@@ -157,14 +114,7 @@ function Login({ user }) {
                                 <img className='logo' src={logo} alt="" />
                             </div>
                         </div>
-                        <div className="col align-items-center flex-col">
-                            <div className="img sign-up">
-                                <img className='logo' src={logo} alt="" />
-                            </div>
-                            <div className="text sign-up">
-                                <h2>Join with us</h2>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             }
