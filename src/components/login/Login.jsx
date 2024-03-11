@@ -3,10 +3,11 @@ import './login.css';
 import logo from '../../assets/Logo.png'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { auth } from '../../config/firebase';
-import { signInWithEmailAndPassword  } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { RingLoader } from 'react-spinners';
 
 function Login({ user }) {
+
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -14,9 +15,7 @@ function Login({ user }) {
         setTimeout(() => {
             setLoading(false)
         }, 1000)
-
-        return
-    }, [])
+    }, [user])
 
     const history = useNavigate()
 
@@ -38,12 +37,15 @@ function Login({ user }) {
                 history('/FACIO-admin/admin')
             })
             .catch(error => {
-                alert(error.code);
+                alert("Invalid username or password");
             });
     };
 
     document.title = "Sign In - FACIO Admin";
 
+    if (user){
+        return <Navigate to='/FACIO-admin/admin'></Navigate>
+    }
     return (
         <>
             {loading ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }} > <RingLoader

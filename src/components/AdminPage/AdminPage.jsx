@@ -42,6 +42,8 @@ const AdminPage = ({user}) => {
   }
 
   document.title = "Admin - FACIO";
+
+  
   return (
     <>{loading ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }} > <RingLoader
       color="#000"
